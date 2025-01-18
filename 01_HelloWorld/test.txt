@@ -1,0 +1,7 @@
+Hey there, this is a test file -> Sync
+// Already given a '\n', so that new text appends on next line
+17:29:47
+17:30:8
+17:30:10
+17:30:10
+17:30:11
