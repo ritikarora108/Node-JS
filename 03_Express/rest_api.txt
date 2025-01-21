@@ -1,0 +1,25 @@
+SSR - Server Side Rendering -> response sent is in html format (faster than CSR)
+                            -> (if we know that client will surely be a browser)
+                        // Fixed format : img/html/text
+                        // client depends on browser
+                        // fast and secure
+                        // example: google.com uses SSR
+CSR - Client Side Rendering  -> xml/json(standard)  , used in cross-platform arch.
+
+Restful API - rules
+
+1) Client Server Architecture   - Request response model
+-Client and Server are independent entities
+-Client: browser, mobile, alexa,....,smartdevice
+-Response : json (CSR: client will handle the json data and render it their side)
+
+2) always respect all HTTP methods - GET, POST, PUT, PATCH, DELETE
+
+a - POST /createUser        (Not a good practice)
+b - POST /updateUser 
+c- GET  /getUser
+
+instead follow REST API standards and utilize HTTP methods
+a- POST /user
+b- PATCH /user
+c- GET / user
