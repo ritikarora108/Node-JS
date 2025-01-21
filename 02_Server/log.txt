@@ -1,0 +1,44 @@
+17:7:21 - Request receieved from url : /
+17:7:21 - Request receieved from url : /favicon.ico
+17:7:29 - Request receieved from url : /
+17:7:29 - Request receieved from url : /favicon.ico
+17:12:4 - Request receieved from url : /contacts
+17:12:4 - Request receieved from url : /favicon.ico
+17:12:9 - Request receieved from url : /
+17:12:9 - Request receieved from url : /favicon.ico
+17:12:12 - Request receieved from url : /about
+17:12:13 - Request receieved from url : /favicon.ico
+17:12:35 - Request receieved from url : /contacts
+17:12:35 - Request receieved from url : /favicon.ico
+17:13:19 - Request receieved from url : /contacts
+17:13:19 - Request receieved from url : /favicon.ico
+17:13:21 - Request receieved from url : /contacts
+17:13:21 - Request receieved from url : /favicon.ico
+17:46:52 - Request receieved from url : /contacts
+17:47:34 - Request receieved from url : /
+17:47:59 - Request receieved from url : /
+17:49:17 - Request receieved from url : /about
+17:49:46 - Request receieved from url : /about?myName=Ritik&userId=1&class=10
+17:51:5 - Request receieved from url : /about?myName=Ritik&userId=1&class=10
+17:51:35 - Request receieved from url : /about?myName=Ritik&userId=1&class=10
+17:56:59 - Request receieved from url : /about?myName=Ritik&userId=1&class=10
+18:3:28 - Request receieved from url : /
+18:5:10 - Request receieved from url : /hello?name=piyush
+18:5:19 - Request receieved from url : /hello?name=%22random
+18:5:37 - Request receieved from url : /typo
+18:6:16 - Request receieved from url : /search?search_query=javacript+node+tutorial
+18:6:32 - Request receieved from url : /search?search_query=javascript+node+tutorial
+18:9:14 - Request receieved from url : /search?search_query=javascript+node+tutorial
+18:9:30 - Request receieved from url : /search?search_query=javascript+node+tutorial
+18:9:42 - Request receieved from url : /se4355al
+18:9:44 - Request receieved from url : /about?myName=Ritik&userId=1&class=10
+18:9:56 - Request receieved from url : /hello?name%22of%22
+18:10:2 - Request receieved from url : /hello?name=%22of%22
+18:10:8 - Request receieved from url : /
+18:11:14 - Request receieved from url : /about/version1
+18:44:28 - Request receieved from url : / Method: GET
+18:44:38 - Request receieved from url : /about?myName=Ritik&userId=1&class=10 Method: GET
+18:44:46 - Request receieved from url : /name=me Method: GET
+18:44:54 - Request receieved from url : /hello/name=me Method: GET
+18:44:58 - Request receieved from url : /hello?name=me Method: GET18:46:22 - Request receieved from url : /search/search_query=anime Method: GET 
+18:46:27 - Request receieved from url : /search?search_query=anime Method: GET 
