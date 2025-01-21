@@ -1,0 +1,33 @@
+How Versioning works in NodeJs
+
+"dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+}
+
+
+
+^4.21.2
+
+^ -> carrot symbol (shows when you will update the express version it will update <5.0.0  , i.e. will pick updated bug fix and minor release, won't update major release version)  / compatible with version
+
+~ -> (can update only till minor release) / approximately equivalent to version
+
+latest ->   (XXXXXXXX 
+                not recommended , will pick the most updated version, and if major version is changed, your code can break 
+            XXXXXXX)
+
+
+4 (1st part)-> major release/ breaking update(can break your code, always check "change-log / history.md) file
+
+21 (2nd part)-> bug fix release/new feature added/security-update (recommended)
+
+2 (3rd part)-> minor release (deprecated something or minor change : optional)
+
+
+
+version: "4.13.4" -> locked version, won't get updated
+         "~4.13.4" -> can update till minor release
+         "^4.13.4" -> can update on bug fix release or minor release
+
+
