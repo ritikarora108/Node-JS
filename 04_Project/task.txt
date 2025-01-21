@@ -1,0 +1,15 @@
+REST API - json
+
+
+Hybrid server : /api routes serves varioud clients -deals with json data
+GET/users - list all users - html
+GET/api/users - return all users - json
+
+Dynamic path parameters /id
+
+GET/api/users/id  - get the user with id 
+PATCH/api/users/id - update some details of user with id
+DELETE/api/users/id - delete the user with id
+
+
+POST/api/users - create a user
