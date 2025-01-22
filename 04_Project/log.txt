@@ -7,3 +7,12 @@
 23: 18:45 - PATCH : /api/users/17
 23: 19:24 - PATCH : /api/users/17
 23: 19:37 - PATCH : /api/users/11
+23: 47:13 - GET : /users
+23: 47:43 - GET : /users
+23: 48:23 - GET : /users
+23: 49:44 - GET : /users
+23: 53:33 - GET : /users/1
+23: 54:2 - GET : /users
+23: 54:21 - GET : /users/1
+23: 54:34 - GET : /api/users/1
+23: 54:41 - GET : /api/users

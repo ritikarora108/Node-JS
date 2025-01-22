@@ -36,6 +36,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/users', (req, res) => {
+    // console.log(req.headers);
+    // res.setHeader('X-Custom-Header','This is my custom response header')
+    // Good practice to denote X-.. for custom headers
     const html =
         `<ul>
             ${users.map(user => `<li>${user.first_name}</li>`).join("")}
