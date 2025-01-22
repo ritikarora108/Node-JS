@@ -13,6 +13,16 @@ const app = express();
 // middleware - plugin
 app.use(express.urlencoded({ extended: false }))
 
+
+app.use((req, res, next) => {
+    const date = new Date();
+    const data = `${date.getHours()}: ${date.getMinutes()}:${date.getSeconds()} - ${req.method} : ${req.path}\n`
+    fs.appendFile('./log.txt', data, (err, res) => {
+        if (err) console.log(`Error: ${err}`);
+    })
+    next()
+})
+
 let prefix_id = Number(process.env.PREFIX_ID);
 
 function updateUsersData(users) {
@@ -46,9 +56,12 @@ app.route('/api/users/:id').
         return res.json(user??{status: "User not found"});
     }).patch((req, res) => {
         // Update users with id
-        const id = Number(req.params.id)
+        const id = Number(req.params.id);
         const body = req.body;
         const userIndex = users.findIndex(user => user.id === id);
+        if (userIndex===-1) {
+            return res.json({ status: "User does not exist" });
+        }
         let idFieldExist = false;
         for (const property in body) {
             if (property === 'id') {
@@ -59,7 +72,6 @@ app.route('/api/users/:id').
         }
         updateUsersData(users);
         let msg = "Users details updated successfully";
-        console.log(idFieldExist)
         if (idFieldExist) {
             if (Object.keys(body).length === 1) {
                 msg="id can't be updated"

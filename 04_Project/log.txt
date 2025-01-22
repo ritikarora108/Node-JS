@@ -1,0 +1,9 @@
+23:15:8 - GET : /api/users/21
+23: 16:4 - GET : /api/users/11
+23: 16:26 - GET : /api/users/11
+23: 16:34 - GET : /api/users
+23: 16:54 - GET : /api/users/17
+23: 17:17 - PATCH : /api/users/17
+23: 18:45 - PATCH : /api/users/17
+23: 19:24 - PATCH : /api/users/17
+23: 19:37 - PATCH : /api/users/11
