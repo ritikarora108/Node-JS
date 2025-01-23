@@ -1,7 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import connectMongoDB from "./connection.js"
-import userRouter from "./routes/user.js"
+import userRoute from "./routes/user.js"
 import logReqRes from "./middlewares/index.js"
 
 dotenv.config();
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(logReqRes("log.txt"));
 
 // Routes
-app.use('/api/users', userRouter);
+app.use('/api/users', userRoute);
 
 const port = process.env.PORT || 8001;
 
