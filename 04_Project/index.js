@@ -56,14 +56,17 @@ app.route('/api/users/:id').
     get((req, res) => {
         const id = Number(req.params.id);
         const user = users.find((user) => user.id === id);
-        return res.json(user??{status: "User not found"});
+        if (user) {
+            return res.json(user);
+        }
+        else return res.status(404).json({status: "User not found"});
     }).patch((req, res) => {
         // Update users with id
         const id = Number(req.params.id);
         const body = req.body;
         const userIndex = users.findIndex(user => user.id === id);
         if (userIndex===-1) {
-            return res.json({ status: "User does not exist" });
+            return res.status(404).json({ status: "User does not exist" });
         }
         let idFieldExist = false;
         for (const property in body) {
@@ -87,7 +90,9 @@ app.route('/api/users/:id').
         // Delete users with id
         const id = Number(req.params.id);
         const userIndex = users.findIndex(user => user.id === id);
-
+        if (userIndex===-1) {
+            return res.status(404).json({ status: "User does not exist" });
+        }
         users.splice(userIndex, 1);
         updateUsersData(users)
         return res.json({ status: "User deleted successfully" });
@@ -96,13 +101,17 @@ app.route('/api/users/:id').
 app.post('/api/users', (req, res) => {
     // Create a user in db with the available form data
     const body = req.body;
+    if (!body || !body.first_name || !body.last_name || !body.email || !body.gender || !body.job_title) {
+        return res.status(400).end("Give all the fields : first_name, last_name, email, gender and job_title");
+    }
     users.push({ id: prefix_id + 1, ...body });
     prefix_id++;
     process.env.PREFIX_ID = prefix_id;
     
     updateUsersData(users);
-    return res.json({ id:prefix_id, ...body , status: "User added successfully" });
+    return res.status(201).json({ id:prefix_id, ...body , status: "User added successfully" });
 })
+
 
 app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`))
 
