@@ -2,10 +2,10 @@ import express from "express";
 import urlControllers from "../controllers/url.js";
 
 const {
-  handleGenerateNewShortURL,
-  handleRedirectURL,
-  handleGetAnalytics,
-  handleGetAllURLDetails,
+    handleGenerateNewShortURL,
+    handleRedirectURL,
+    handleGetAnalytics,
+    handleGetAllURLDetails,
 } = urlControllers;
 
 const router = express.Router();

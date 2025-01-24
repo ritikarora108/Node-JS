@@ -13,8 +13,8 @@ import urlRouter from "./routes/url.js";
 import userRouter from "./routes/user.js";
 
 connectMongoDB(process.env.MONGO_URL)
-  .then(() => console.log(`MongoDB connected`))
-  .catch((err) => console.log(`Error: ${err}`));
+    .then(() => console.log(`MongoDB connected`))
+    .catch((err) => console.log(`Error: ${err}`));
 
 const app = express();
 app.set("view engine", "ejs");
@@ -25,11 +25,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(logReqRes("./log.txt"));
 
-const { checkForAuthentication } = authMiddlewares;
+const { checkForAuthentication, restrictTo } = authMiddlewares;
 
-app.use("/", checkForAuthentication, staticRouter);
+app.use(checkForAuthentication);
+
+app.use("/", staticRouter);
 app.use("/user", userRouter);
-app.use("/url", checkForAuthentication, urlRouter);
+app.use("/url", restrictTo(["NORMAL"]), urlRouter);
 
 const port = process.env.PORT;
 
