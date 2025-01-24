@@ -1,17 +1,24 @@
 import express from "express"
 import dotenv from "dotenv"
-import connectMongoDB from "./connection.js";
-import staticRoute from "./routes/staticRouter.js"
-import urlRouter from "./routes/url.js"
 import path from "path"
-import logReqRes from "./middlewares/index.js"
-
-
+import cookieParser from "cookie-parser";
 dotenv.config();
+
+import connectMongoDB from "./connection.js";
+
+import logReqRes from "./middlewares/index.js"
+import authMiddlewares from "./middlewares/auth.js";
+import staticRouter from "./routes/staticRouter.js"
+import urlRouter from "./routes/url.js"
+import userRouter from "./routes/user.js"
+
+
 
 connectMongoDB(process.env.MONGO_URL)
     .then(() => console.log(`MongoDB connected`))
     .catch((err) => console.log(`Error: ${err}`));
+
+
 
 
 
@@ -21,11 +28,15 @@ app.set("views", path.resolve("./views"));
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(cookieParser());
 app.use(logReqRes("./log.txt"));
 
+const {restrictToLoggedInUserOnly, checkAuth} = authMiddlewares
 
-app.use('/',staticRoute)
-app.use('/url', urlRouter)
+
+app.use('/',checkAuth, staticRouter)
+app.use('/user', userRouter);
+app.use('/url',restrictToLoggedInUserOnly, urlRouter)
 
 const port = process.env.PORT;
 
