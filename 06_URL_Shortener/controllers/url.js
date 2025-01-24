@@ -1,6 +1,28 @@
 import { nanoid } from "nanoid";
 import URL from "../models/url.js"
 
+async function handleGetAllURLDetails(req,res) {
+    try {
+        const allURLDetails = await URL.find({});
+        const html = `
+        <html>
+            <head>
+                <title>URLs</title>
+            </head>
+            <body>
+                <ol>
+                    ${allURLDetails.map((urlEntry) => `<li>${urlEntry.shortId} - ${urlEntry.redirectURL} - ${urlEntry.visitHistory.length}</li>`).join("")}
+                </ol>
+            </body>
+        </html>
+        `;
+        return res.status(200).send(html);
+    } catch (error) {
+        console.log(`Error: ${error}`)
+        return res.status(500).json({msg:error})
+    }
+}
+
 async function handleGenerateNewShortURL(req, res) {
     try {
         const body = req.body;
@@ -62,5 +84,5 @@ async function  handleGetAnalytics(req,res) {
     }
 }
 
-export default { handleGenerateNewShortURL, handleRedirectURL,handleGetAnalytics }
+export default { handleGenerateNewShortURL, handleRedirectURL,handleGetAnalytics,handleGetAllURLDetails }
 
