@@ -22,10 +22,30 @@ router.get('/', async (req, res) => {
     // }
 
     try {
-        const allUrls = await URL.find({});
+        
+        const allUrls = await URL.find({createdBy: req.user?._id});
         res.render("home.ejs", {
             urls: allUrls
         })
+    } catch (error) {
+        console.log(`Error: ${error}`);
+        return res.status(500).json({ msg: String(error) });
+    }
+})
+
+
+router.get('/signup', (req, res) => {
+    try {
+        return res.render("signup.ejs");
+    } catch (error) {
+        console.log(`Error: ${error}`);
+        return res.status(500).json({ msg: String(error) });
+    }
+})
+
+router.get('/login', (req, res) => {
+    try {
+        return res.render("login.ejs");
     } catch (error) {
         console.log(`Error: ${error}`);
         return res.status(500).json({ msg: String(error) });
