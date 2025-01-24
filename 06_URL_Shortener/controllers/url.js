@@ -37,10 +37,12 @@ async function handleGenerateNewShortURL(req, res) {
             visitHistory: []
         });
 
-        return res.status(201).json({
-            id: shortId,
-            msg: "This short URL will redirect to the original URL"
-        })
+        return res.render('home.ejs',{id: result.shortId})
+
+        // return res.status(201).json({
+        //     id: shortId,
+        //     msg: "This short URL will redirect to the original URL"
+        // })
 
     } catch (error) {
         console.log(`Error: ${error}`)
