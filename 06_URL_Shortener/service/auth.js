@@ -10,27 +10,29 @@
 
 // export default { setUser, getUser };
 
-
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 dotenv.config();
 const secret = process.env.JWT_SECRET_KEY;
 
 const createJwtToken = (user) => {
-    return jwt.sign({
-        _id: user?._id,
-        email: user?.email,
-    }, secret);
-}
+  return jwt.sign(
+    {
+      _id: user?._id,
+      email: user?.email,
+    },
+    secret,
+  );
+};
 
 const verifyJwtToken = (token) => {
-    try {
-        if (!token) return null;
-        return jwt.verify(token, secret);
-    } catch (error) {
-        console.log(`Error: ${error}`);
-        return null;
-    }
-}
+  try {
+    if (!token) return null;
+    return jwt.verify(token, secret);
+  } catch (error) {
+    console.log(`Error: ${error}`);
+    return null;
+  }
+};
 
 export default { createJwtToken, verifyJwtToken };
