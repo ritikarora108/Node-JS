@@ -1,15 +1,20 @@
 import authService from "../service/auth.js";
 
+
 function restrictToLoggedInUserOnly(req, res, next) {
     try {
-        const userUid = req.cookies.uid;
-        if (!userUid) {
-            return res.render("login.ejs");
+        // const token = req.cookies?.jwtToken;
+
+        // Request Headers
+        //  "Authorization" : "Bearer u4234sdffsd37582374"
+        const token = req.headers["Authorization"]?.split("Bearer ")[1];
+        if (!token) {
+            return res.redirect("/login");
         }
 
-        const user = authService.getUser(userUid);
+        const user = authService.verifyJwtToken(token);
         if (!user) {
-            return res.render("login.ejs");
+            return res.redirect("/login");
         }
         
         req.user = user;
@@ -22,8 +27,10 @@ function restrictToLoggedInUserOnly(req, res, next) {
 };
 
 function checkAuth(req, res, next) {
-    const userUid = req.cookies.uid;
-    const user = authService.getUser(userUid);
+    // const token = req.cookies?.jwtToken;
+    const authHeader = req.headers["authorization"];
+    const token = authHeader?.split("Bearer ")[1];
+    const user = authService.verifyJwtToken(token);
     req.user = user;
     next();
 }

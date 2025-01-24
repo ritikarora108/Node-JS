@@ -1,6 +1,7 @@
 import User from "../models/user.js";
-import { v4 as uuidv4 } from "uuid"
+// import { v4 as uuidv4 } from "uuid"
 import authService from "../service/auth.js"
+
 
 async function handleUserSignup(req, res){
     try {
@@ -30,11 +31,15 @@ async function handleUserLogin(req, res){
             })
         }
 
-        const sessionId = uuidv4();
-        authService.setUser(sessionId, user);
-        res.cookie('uid', sessionId);
+        // const sessionId = uuidv4();
+        // authService.setUser(sessionId, user);
+        // res.cookie('uid', sessionId);
 
-        return res.redirect("/");
+        const token = authService.createJwtToken(user);
+        // res.cookie('jwtToken', token);
+        // return res.status(200).redirect("/");
+
+        return res.status(200).json({token});
     } catch (error) {
         console.log(`Error: ${error}`);
         return res.status(500).json({ msg: String(error) });
