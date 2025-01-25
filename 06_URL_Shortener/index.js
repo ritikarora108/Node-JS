@@ -31,7 +31,7 @@ app.use(checkForAuthentication);
 
 app.use("/", staticRouter);
 app.use("/user", userRouter);
-app.use("/url", restrictTo(["NORMAL"]), urlRouter);
+app.use("/url", restrictTo(["NORMAL","ADMIN"]), urlRouter);
 
 const port = process.env.PORT;
 

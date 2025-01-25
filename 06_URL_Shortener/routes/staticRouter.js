@@ -1,9 +1,22 @@
 import express from "express";
 import URL from "../models/url.js";
+import authMiddlewares from "../middlewares/auth.js"
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/admin/urls", authMiddlewares.restrictTo(["ADMIN"]), async (req, res) => {
+    try {
+        const allUrls = await URL.find();
+        res.render("home.ejs", {
+            urls: allUrls,
+        });
+    } catch (error) {
+        console.log(`Error: ${error}`);
+        return res.status(500).json({ msg: String(error) });
+    }
+});
+
+router.get("/", authMiddlewares.restrictTo(["NORMAL","ADMIN"]), async (req, res) => {
     // try {
     //     const urlEntries = await URL.find({});
     //     res.render("home.ejs", {
@@ -22,7 +35,7 @@ router.get("/", async (req, res) => {
     // }
 
     try {
-        const allUrls = await URL.find({ createdBy: req.user?._id });
+        const allUrls = await URL.find({ createdBy: req.user._id });
         res.render("home.ejs", {
             urls: allUrls,
         });
