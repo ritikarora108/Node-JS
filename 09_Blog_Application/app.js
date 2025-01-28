@@ -1,5 +1,7 @@
-import express from "express";
 import { configDotenv } from "dotenv";
+configDotenv();
+
+import express from "express";
 import path from "path";
 import connectMongoDB from "./connection.js";
 import cookieParser from "cookie-parser";
@@ -9,7 +11,6 @@ import userRouter from "./routes/user.js"
 import blogRouter from "./routes/blog.js"
 import Blog from "./models/blog.js"
 
-configDotenv();
 
 connectMongoDB(process.env.MONGO_URL)
     .then(() => console.log(`MongoDb Connected!`))
@@ -31,7 +32,7 @@ app.use(authentication.checkForAuthenticationCookie("token"));
 
 
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 app.get('/', async (req, res) => {
     const allBlogs = await Blog.find({}).sort({ createdAt: -1 });
     // console.log(allBlogs)
