@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { createHmac, randomBytes } from "crypto";
+import authentication from "../services/authentication.js";
 
 const userSchema = new Schema({
     fullName: {
@@ -18,10 +19,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    profileImage: {
+    profileImageURL: {
         type: String,
         required: true,
-        default: "../public/images/default.png"
+        default: "../public/images/default_blog.png"
     },
     role: {
         type: String,
@@ -33,39 +34,46 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function (next) {
 
-    if (!this.isModified("password")) return;
-    const salt = randomBytes(16).toString();
-    const hashedPassword = createHmac('sha256', salt)
-        .update(this.password)
-        .digest('hex');
+    try {
+        if (!this.isModified("password")) return;
+        const salt = randomBytes(16).toString();
+        const hashedPassword = createHmac('sha256', salt)
+            .update(this.password)
+            .digest('hex');
 
-    this.salt = salt;
-    this.password = hashedPassword;
-    next();
+        this.salt = salt;
+        this.password = hashedPassword;
+        return next();
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 
-userSchema.static('matchPassword', async function (input_email, input_password) {
-    const user = await this.findOne({ email: input_email });
-    if (!user) {
-        throw new Error("User not found!");
-    }
+userSchema.static('matchPasswordAndGenerateToken', async function (input_email, input_password) {
+    try {
+        const user = await this.findOne({ email: input_email });
+        if (!user) {
+            throw new Error("User not found!");
+        }
 
-    
-    const hashedPassword = user.password;
-    const newGeneratedHashedPassword = createHmac('sha256', user.salt)
-        .update(input_password)
-        .digest('hex');
-    
-    if (hashedPassword !== newGeneratedHashedPassword) {
-        throw new Error("Incorrect Password!");
-    }
 
-    const { password, salt, ...sanitizedUser } = user._doc;
-    return sanitizedUser;
+        const hashedPassword = user.password;
+        const newGeneratedHashedPassword = createHmac('sha256', user.salt)
+            .update(input_password)
+            .digest('hex');
+
+        if (hashedPassword !== newGeneratedHashedPassword) {
+            throw new Error("Incorrect Password!");
+        }
+        const token = authentication.createTokenForUser(user);
+        return token;
+    } catch (error) {
+        console.log(error);
+    }
 })
 
-const USER = model("user", userSchema);
+const User = model("user", userSchema);
 
-export default USER;
+export default User;
 

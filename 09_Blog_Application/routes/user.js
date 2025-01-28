@@ -1,5 +1,6 @@
 import { Router } from "express";
-import USER from "../models/user.js";
+import User from "../models/user.js";
+import authentication from "../services/authentication.js";
 
 const router = Router();
 
@@ -10,13 +11,17 @@ router.get('/signin', (req, res) => {
 router.post('/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await USER.matchPassword(email, password);
-        console.log(user);
+        const token = await User.matchPasswordAndGenerateToken(email, password);
+        if(!token) throw new Error('JWT malformed')
+        res.cookie("token", token);
+
+        console.log(token);
+        
         return res.redirect('/');
     } catch (error) {
         console.log(error);
         res.render('signin', {
-            msg: "Incorrect Email or Password!"
+            error: "Incorrect Email or Password!"
         })
     }
 })
@@ -26,7 +31,7 @@ router.get('/signup', (req, res) => {
 })
 router.post('/signup', async (req, res) => {
     const { fullName, email, password } = req.body; 
-    await USER.create({
+    await User.create({
         fullName,
         email,
         password
@@ -34,6 +39,10 @@ router.post('/signup', async (req, res) => {
     return res.redirect('/');
 })
 
+
+router.get('/logout', (req, res) => {
+    return res.clearCookie('token').redirect('/');
+})
 
 
 export default router;
