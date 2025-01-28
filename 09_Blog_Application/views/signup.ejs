@@ -10,7 +10,7 @@
     <%- include('./partials/nav.ejs') %>
     <%- include('./partials/script.ejs') %>
 
-    <form action="/user/signup" method="POST" style="margin: 10px;">
+    <form action="/user/signup" method="POST" style="margin: 10px;" enctype="multipart/form-data">
         <div class="row mb-3">
             <label for="inputName3" class="col-sm-1 col-form-label">Full Name</label>
             <div class="col-sm-2">
@@ -23,12 +23,20 @@
                 <input type="email" class="form-control" name="email" placeholder="xyz@gmail.com">
             </div>
         </div>
+        
         <div class="row mb-3">
             <label for="inputPassword3" class="col-sm-1 col-form-label">Password</label>
             <div class="col-sm-2">
                 <input type="password" class="form-control"  name="password" placeholder="********">
             </div>
         </div>
+        <div class="row mb-3">
+            <label for="profileImage" class="col-sm-1 col-form-label">Profle Image</label>
+            <div class="col-sm-2">
+                <input type="file" class="form-control" name="profileImage">
+            </div>
+        </div>
+
         
         <button type="submit" class="btn btn-primary" style="margin-left: 45px";>Signup</button>
     </form>
