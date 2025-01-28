@@ -1,6 +1,7 @@
 import { Router } from "express";
 import User from "../models/user.js";
 import authentication from "../services/authentication.js";
+import upload from "../services/fileUpload.js";
 
 const router = Router();
 
@@ -29,14 +30,26 @@ router.post('/signin', async (req, res) => {
 router.get('/signup', (req, res) => {
     return res.render('signup');
 })
-router.post('/signup', async (req, res) => {
-    const { fullName, email, password } = req.body; 
-    await User.create({
-        fullName,
-        email,
-        password
-    })
-    return res.redirect('/');
+router.post('/signup', upload.single('profileImage'), async (req, res) => {
+    try {
+        const { fullName, email, password } = req.body;
+
+        // Prepare the data to be inserted
+        const userData = {
+            fullName,
+            email,
+            password,
+            profileImageURL: req.file ? `/uploads/${req.file.filename}` : undefined  // If file exists, use the path
+        };
+
+        // Create the user with the prepared data
+        await User.create(userData);
+
+        return res.redirect('/user/signin');
+    } catch (error) {
+        console.log(error);
+    }
+
 })
 
 
