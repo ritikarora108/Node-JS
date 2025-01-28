@@ -34,6 +34,7 @@ app.use(authentication.checkForAuthenticationCookie("token"));
 const port = process.env.PORT;
 app.get('/', async (req, res) => {
     const allBlogs = await Blog.find({}).sort({ createdAt: -1 });
+    // console.log(allBlogs)
     res.render('home', {
         user: req.user,
         blogs: allBlogs
