@@ -1,0 +1,1 @@
+Lets try to render this file on home page, using fs, path and express module
